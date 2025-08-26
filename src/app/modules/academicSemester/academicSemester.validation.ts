@@ -1,31 +1,35 @@
-import { z } from 'zod';
+import z from 'zod';
 import {
-  AcademicSemesterCode,
-  AcademicSemesterName,
-  Months,
+  academicSemesterCode,
+  academicSemesterMonths,
+  academicSemesterName
 } from './academicSemester.constant';
 
-const createAcdemicSemesterValidationSchema = z.object({
+const createAcademicSemesterSchema = z.object({
   body: z.object({
-    name: z.enum([...AcademicSemesterName] as [string, ...string[]]),
+    name: z.enum([...academicSemesterName] as [string, ...string[]]),
+    code: z.enum([...academicSemesterCode] as [string, ...string[]]),
     year: z.string(),
-    code: z.enum([...AcademicSemesterCode] as [string, ...string[]]),
-    startMonth: z.enum([...Months] as [string, ...string[]]),
-    endMonth: z.enum([...Months] as [string, ...string[]]),
-  }),
+    startMonths: z.enum([...academicSemesterMonths] as [string, ...string[]]),
+    endMonths: z.enum([...academicSemesterMonths] as [string, ...string[]])
+  })
 });
 
-const updateAcademicSemesterValidationSchema = z.object({
+const updateAcademicSemesterSchema = z.object({
   body: z.object({
-    name: z.enum([...AcademicSemesterName] as [string, ...string[]]).optional(),
+    name: z.enum([...academicSemesterName] as [string, ...string[]]).optional(),
+    code: z.enum([...academicSemesterCode] as [string, ...string[]]).optional(),
     year: z.string().optional(),
-    code: z.enum([...AcademicSemesterCode] as [string, ...string[]]).optional(),
-    startMonth: z.enum([...Months] as [string, ...string[]]).optional(),
-    endMonth: z.enum([...Months] as [string, ...string[]]).optional(),
-  }),
+    startMonths: z
+      .enum([...academicSemesterMonths] as [string, ...string[]])
+      .optional(),
+    endMonths: z
+      .enum([...academicSemesterMonths] as [string, ...string[]])
+      .optional()
+  })
 });
 
 export const AcademicSemesterValidations = {
-  createAcdemicSemesterValidationSchema,
-  updateAcademicSemesterValidationSchema,
+  createAcademicSemesterSchema,
+  updateAcademicSemesterSchema
 };

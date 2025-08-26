@@ -1,63 +1,72 @@
-import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { AcademicSemesterServices } from './academicSemester.service';
+import httpStatus from 'http-status';
 
 const createAcademicSemester = catchAsync(async (req, res) => {
-  const result = await AcademicSemesterServices.createAcademicSemesterIntoDB(
-    req.body,
+  const result = await AcademicSemesterServices.createAcademicSemesterFromDB(
+    req.body
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic semester is created succesfully',
-    data: result,
+    message: 'Academic Semester is Created Succssfully',
+    data: result
   });
 });
 
-const getAllAcademicSemesters = catchAsync(async (_req, res) => {
-  const result = await AcademicSemesterServices.getAllAcademicSemestersFromDB();
-
+const getAllAcademicSemester = catchAsync(async (_req, res) => {
+  const result = await AcademicSemesterServices.getAllAcademicSemesterFromDB();
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic semesters are retrieved successfully',
-    data: result,
+    message: 'Academic Semester',
+    data: result
   });
 });
 
 const getSingleAcademicSemester = catchAsync(async (req, res) => {
   const { semesterId } = req.params;
-  const result =
-    await AcademicSemesterServices.getSingleAcademicSemesterFromDB(semesterId);
+  if (!semesterId && typeof semesterId !== 'string') {
+    throw new Error('Please Provide valid type of ID');
+  }
+  const result = await AcademicSemesterServices.getSingleAcademicSemesterFromDB(
+    semesterId
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
+    message: `${result?.name} Fetched Successfully!`,
     success: true,
-    message: 'Academic semester is retrieved succesfully',
-    data: result,
+    data: result
   });
 });
 
 const updateAcademicSemester = catchAsync(async (req, res) => {
   const { semesterId } = req.params;
-  const result = await AcademicSemesterServices.updateAcademicSemesterIntoDB(
+  if (!semesterId && typeof semesterId !== 'string') {
+    throw new Error('Please Provide valid type of ID');
+  }
+
+  const result = await AcademicSemesterServices.updateAcademicSemesterFromDB(
     semesterId,
-    req.body,
+    req.body
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
+    message: `${result?.name} Updated Successfully!`,
     success: true,
-    message: 'Academic semester is retrieved succesfully',
-    data: result,
+    data: result
   });
 });
 
+
+
 export const AcademicSemesterControllers = {
   createAcademicSemester,
-  getAllAcademicSemesters,
+  getAllAcademicSemester,
   getSingleAcademicSemester,
-  updateAcademicSemester,
+  updateAcademicSemester
 };

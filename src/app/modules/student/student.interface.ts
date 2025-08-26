@@ -25,37 +25,24 @@ export type TLocalGuardian = {
 export type TStudent = {
   id: string;
   user: Types.ObjectId;
-  password: string;
+  academicSemester: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
   name: TUserName;
-  gender: 'male' | 'female' | 'other';
-  dateOfBirth?: Date;
+  gender: 'male' | 'female';
+  dateOfBirth: string;
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  presentAddress: string;
-  permanentAddress: string;
+  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
-  profileImg?: string;
-  admissionSemester: Types.ObjectId;
+  profileImg: string;
+  isActive: boolean;
   isDeleted: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
-
-//for creating static
 
 export interface StudentModel extends Model<TStudent> {
   isUserExists(id: string): Promise<TStudent | null>;
 }
-
-// for creating instance
-
-// export interface StudentMethods {
-//   isUserExists(id: string): Promise<TStudent | null>;
-// }
-
-// export type StudentModel = Model<
-//   TStudent,
-//   Record<string, never>,
-//   StudentMethods
-// >;

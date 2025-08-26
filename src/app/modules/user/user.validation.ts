@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
 const userValidationSchema = z.object({
-  pasword: z
-    .string().min(6, { message: "Password must be at least 6 characters long" }).optional(),
+  password: z
+    .string()
+    .max(20, { message: 'Password can not be more than 20 characters' })
+    .optional(),
+  role: z.enum(['admin', 'student', 'faculty']),
 });
 
 export const UserValidation = {
-  userValidationSchema,
+  userValidationSchema
 };
