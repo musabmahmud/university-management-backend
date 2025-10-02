@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import config from '../../config';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.interface';
-import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
 import AppError from '../../error/AppError';
@@ -13,6 +12,7 @@ import { Admin } from '../admin/admin.model';
 import { TFaculty } from '../Faculty/faculty.interface';
 import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
 import { Faculty } from '../Faculty/faculty.model';
+import { Student } from '../student/student.model';
 
 const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   // create a user object
@@ -51,7 +51,6 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
     // set id , _id as user
     studentData.id = newUser[0].id;
     studentData.user = newUser[0]._id;
-
     const newStudent = await Student.create([studentData], { session });
 
     if (!newStudent.length) {
@@ -60,14 +59,14 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
 
     await session.commitTransaction();
     return newStudent;
-  } catch (err) {
+  } catch (err: any) {
+    console.log(err)
     await session.abortTransaction();
-    throw new Error('Failed to create Student!');
+    throw new Error(err);
   } finally {
     await session.endSession();
   }
 };
-
 const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   const userData: Partial<TUser> = {};
 
@@ -98,7 +97,7 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
     await session.commitTransaction();
     await session.endSession();
 
-    return new Admin();
+    return newAdmin;
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();

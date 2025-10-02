@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use('/v1/api', router);
 
-app.get('/', (_req: Request, res: Response) => {
+app.get('/v1/api', (_req: Request, res: Response) => {
   res.send('Welcome to University Management Backend API');
 });
 

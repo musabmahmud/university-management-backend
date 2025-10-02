@@ -1,9 +1,12 @@
 class AppError extends Error {
   public statusCode: number;
 
-  constructor(statusCode: number, message: string, stack = '') {
+  constructor(statusCode: number, message: string, stack: string = '') {
     super(message);
     this.statusCode = statusCode;
+
+    // Set the prototype explicitly for instanceof checks
+    Object.setPrototypeOf(this, AppError.prototype);
 
     if (stack) {
       this.stack = stack;

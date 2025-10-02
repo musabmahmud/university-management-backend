@@ -3,35 +3,46 @@ import { User } from './user.model';
 
 // Student ID
 const findLastStudentId = async () => {
-  const laststudent = await User.findOne({ role: 'student' }, { id: 1, _id: 0 })
-    .sort({ createdAt: -1 })
+  const lastStudent = await User.findOne(
+    {
+      role: 'student',
+    },
+    {
+      id: 1,
+      _id: 0,
+    },
+  )
+    .sort({
+      createdAt: -1,
+    })
     .lean();
 
-  return laststudent?.id ? laststudent.id : undefined;
+  return lastStudent?.id ? lastStudent.id : undefined;
 };
 
 export const generateStudentId = async (payload: TAcademicSemester) => {
   let currentId = (0).toString();
-
   const lastStudentId = await findLastStudentId();
 
   const lastStudentSemesterCode = lastStudentId?.substring(4, 6);
-  const lastStudentYear = lastStudentId?.substring(0, 2);
+  const lastStudentYear = lastStudentId?.substring(0, 4);
 
   const currentSemesterCode = payload.code;
-  const currentSemesterYear = payload.year?.toString()?.substring(2);
+  const currentYear = payload.year;
 
   if (
     lastStudentId &&
     lastStudentSemesterCode === currentSemesterCode &&
-    lastStudentYear === currentSemesterYear
+    lastStudentYear === currentYear
   ) {
     currentId = lastStudentId.substring(6);
   }
 
   let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
 
-  return currentSemesterYear + currentSemesterCode + incrementId;
+  incrementId = `${payload.year}${payload.code}${incrementId}`;
+
+  return incrementId;
 };
 
 // Faculty ID
