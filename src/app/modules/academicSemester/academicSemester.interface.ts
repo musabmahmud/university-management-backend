@@ -1,5 +1,5 @@
 export type TMonths =
-   'January'
+  | 'January'
   | 'February'
   | 'March'
   | 'April'

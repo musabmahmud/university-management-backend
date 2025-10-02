@@ -5,13 +5,13 @@ import { academicFacultyServices } from './academicFaculty.service';
 
 const createAcademicFaculty = catchAsync(async (req, res) => {
   const result = await academicFacultyServices.createAcademicFacultyFromDB(
-    req.body
+    req.body,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: 'Academic Faculty is Created Succssfully',
-    data: result
+    data: result,
   });
 });
 
@@ -21,20 +21,19 @@ const getAllAcademicFaculty = catchAsync(async (_req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: `Academic Faculty Fetched Successfully!`,
-    data: result
+    data: result,
   });
 });
 
 const getSingleAcademicFaculty = catchAsync(async (req, res) => {
   const { facultyId } = req.params;
-  const result = await academicFacultyServices.getSingleAcademicFacultyFromDB(
-    facultyId
-  );
+  const result =
+    await academicFacultyServices.getSingleAcademicFacultyFromDB(facultyId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: 'Academic Faculty Found Successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -43,26 +42,25 @@ const updateAcademicFaculty = catchAsync(async (req, res) => {
 
   const result = await academicFacultyServices.updateAcademicFacultyFromDB(
     facultyId,
-    req.body
+    req.body,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: `Academic Faculty : ${req.body.name} update Successfully`,
-    data: result
+    data: result,
   });
 });
 
 const deleteAcademicFaculty = catchAsync(async (req, res) => {
   const { facultyId } = req.params;
-  const result = await academicFacultyServices.getSingleAcademicFacultyFromDB(
-    facultyId
-  );
+  const result =
+    await academicFacultyServices.getSingleAcademicFacultyFromDB(facultyId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: 'Academic Faculty Deleted Successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -71,5 +69,5 @@ export const AcademicFacultyControllers = {
   getAllAcademicFaculty,
   getSingleAcademicFaculty,
   updateAcademicFaculty,
-  deleteAcademicFaculty
+  deleteAcademicFaculty,
 };

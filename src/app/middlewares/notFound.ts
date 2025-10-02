@@ -8,8 +8,8 @@ const notFound = (req: Request, res: Response, _next: NextFunction) => {
     message: 'Api Not Found',
     error: {
       path: req.originalUrl,
-      message: 'Api Not Found'
-    }
+      message: 'Api Not Found',
+    },
   });
 };
 

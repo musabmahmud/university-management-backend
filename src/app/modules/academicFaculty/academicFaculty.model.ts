@@ -6,21 +6,21 @@ const academicFacultySchema = new Schema<TAcademicFaculty>(
     name: {
       type: String,
       unique: true,
-      required: true
+      required: true,
     },
     isActive: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isDeleted: {
       type: Boolean,
       default: false,
-      select: false
-    }
+      select: false,
+    },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 academicFacultySchema.pre('find', function (next) {
@@ -40,5 +40,5 @@ academicFacultySchema.pre('aggregate', function (next) {
 
 export const AcademicFaculty = model<TAcademicFaculty>(
   'AcademicFaculty',
-  academicFacultySchema
+  academicFacultySchema,
 );

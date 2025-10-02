@@ -8,20 +8,20 @@ const router = express.Router();
 router.post(
   '/create',
   validateRequest(AcademicDepartmentValiations.createAcademicDepartmentSchema),
-  AcademicDepartmentControllers.createAcademicDepartment
+  AcademicDepartmentControllers.createAcademicDepartment,
 );
 
 router.get('/', AcademicDepartmentControllers.getAllAcademicDepartment);
 
 router.get(
   '/:departmentId',
-  AcademicDepartmentControllers.getSingleAcademicDepartment
+  AcademicDepartmentControllers.getSingleAcademicDepartment,
 );
 
 router.patch(
   '/update/:departmentId',
   validateRequest(AcademicDepartmentValiations.updateAcademicDepartmentSchema),
-  AcademicDepartmentControllers.updateAcademicDepartment
+  AcademicDepartmentControllers.updateAcademicDepartment,
 );
 
 export const AcademicDepartmentRoutes = router;

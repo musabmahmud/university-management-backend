@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
   '/create',
   validateRequest(AcademicFacultyValidations.createAcademicFacultySchema),
-  AcademicFacultyControllers.createAcademicFaculty
+  AcademicFacultyControllers.createAcademicFaculty,
 );
 
 router.get('/', AcademicFacultyControllers.getAllAcademicFaculty);
@@ -18,12 +18,12 @@ router.get('/:facultyId', AcademicFacultyControllers.getSingleAcademicFaculty);
 router.post(
   '/update/:facultyId',
   validateRequest(AcademicFacultyValidations.updateAcademicFacultySchema),
-  AcademicFacultyControllers.updateAcademicFaculty
+  AcademicFacultyControllers.updateAcademicFaculty,
 );
 
 router.delete(
   '/delete/:facultyId',
-  AcademicFacultyControllers.deleteAcademicFaculty
+  AcademicFacultyControllers.deleteAcademicFaculty,
 );
 
 export const AcademicFacultyRoutes = router;

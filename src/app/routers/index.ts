@@ -10,26 +10,26 @@ const router = Router();
 const moduleRoutes = [
   {
     path: '/students',
-    route: StudentRoutes
+    route: StudentRoutes,
   },
   {
     path: '/users',
-    route: UserRoutes
+    route: UserRoutes,
   },
   {
     path: '/academic-semesters',
-    route: AcademicSemesterRoutes
+    route: AcademicSemesterRoutes,
   },
   {
     path: '/academic-faculties',
-    route: AcademicFacultyRoutes
+    route: AcademicFacultyRoutes,
   },
   {
     path: '/academic-departments',
-    route: AcademicDepartmentRoutes
-  }
+    route: AcademicDepartmentRoutes,
+  },
 ];
 
-moduleRoutes.forEach(route => router.use(route.path, route.route));
+moduleRoutes.forEach((route) => router.use(route.path, route.route));
 
 export default router;

@@ -10,7 +10,7 @@ const getAllStudents = catchAsync(async (_req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Students are retrieved successfully!',
-    data: result
+    data: result,
   });
 });
 
@@ -22,7 +22,7 @@ const getSingleStudent = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Student is retrieved successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -36,7 +36,7 @@ const updateStudent = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Student is Updated successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -49,7 +49,7 @@ const deleteStudent = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Student is deleted successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -57,5 +57,5 @@ export const StudentControllers = {
   getAllStudents,
   getSingleStudent,
   updateStudent,
-  deleteStudent
+  deleteStudent,
 };

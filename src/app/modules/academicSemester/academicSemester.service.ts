@@ -23,7 +23,7 @@ const getSingleAcademicSemesterFromDB = async (id: string) => {
 
 const updateAcademicSemesterFromDB = async (
   id: string,
-  payload: TAcademicSemester
+  payload: TAcademicSemester,
 ) => {
   if (
     payload.name &&
@@ -34,7 +34,7 @@ const updateAcademicSemesterFromDB = async (
   }
 
   const result = await AcademicSemester.findOneAndUpdate({ _id: id }, payload, {
-    new: true
+    new: true,
   });
 
   return result;
@@ -44,5 +44,5 @@ export const AcademicSemesterServices = {
   createAcademicSemesterFromDB,
   getAllAcademicSemesterFromDB,
   getSingleAcademicSemesterFromDB,
-  updateAcademicSemesterFromDB
+  updateAcademicSemesterFromDB,
 };

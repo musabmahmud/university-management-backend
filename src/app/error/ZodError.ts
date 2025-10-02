@@ -1,0 +1,24 @@
+import { ZodError, ZodIssue } from 'zod';
+import { TErrorSources, TGenericErrorResponse } from '../interface/error';
+
+const ZodValidationError = (err: ZodError): TGenericErrorResponse => {
+  const errorSources: TErrorSources = err.issues.map((issue: ZodIssue) => {
+    return {
+      path:
+        typeof issue?.path[issue.path.length - 1] === 'symbol'
+          ? String(issue?.path[issue.path.length - 1])
+          : (issue?.path[issue.path.length - 1] as string | number),
+      message: issue.message,
+    };
+  });
+
+  const statusCode = 400;
+
+  return {
+    statusCode,
+    message: 'Validation Error',
+    errorSources,
+  };
+};
+
+export default ZodValidationError;

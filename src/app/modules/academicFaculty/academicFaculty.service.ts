@@ -18,12 +18,12 @@ const getSingleAcademicFacultyFromDB = async (facultyId: string) => {
 
 const updateAcademicFacultyFromDB = async (
   facultyId: string,
-  payload: Partial<TAcademicFaculty>
+  payload: Partial<TAcademicFaculty>,
 ) => {
   const result = await AcademicFaculty.findOneAndUpdate(
     { _id: facultyId },
     payload,
-    { new: true }
+    { new: true },
   );
   return result;
 };
@@ -32,7 +32,7 @@ const deleteAcademicFacultyFromDB = async (facultyId: string) => {
   const result = await AcademicFaculty.findOneAndUpdate(
     { _id: facultyId },
     { isDeleted: true },
-    { new: true }
+    { new: true },
   );
   return result;
 };
@@ -42,5 +42,5 @@ export const academicFacultyServices = {
   getAllAcademicFacultyFromDB,
   getSingleAcademicFacultyFromDB,
   updateAcademicFacultyFromDB,
-  deleteAcademicFacultyFromDB
+  deleteAcademicFacultyFromDB,
 };

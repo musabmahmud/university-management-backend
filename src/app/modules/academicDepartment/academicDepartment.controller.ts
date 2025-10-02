@@ -8,17 +8,17 @@ const createAcademicDepartment = catchAsync(async (req, res) => {
 
   sendResponse(res, {
     message: 'Academic Department Created Successfully!',
-    data: result
+    data: result,
   });
 });
 
-const getAllAcademicDepartment = catchAsync(async (req, res) => {
+const getAllAcademicDepartment = catchAsync(async (_req, res) => {
   const result =
     await AcademicDepartmentServices.getAllAcademicDepartmentFromDB();
 
   sendResponse(res, {
     message: 'Academic Department Fetched Successfully!',
-    data: result
+    data: result,
   });
 });
 
@@ -27,12 +27,12 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
 
   const result =
     await AcademicDepartmentServices.getSingleAcademicDepartmentFromDB(
-      departmentId
+      departmentId,
     );
 
   sendResponse(res, {
     message: 'Single Academic Department Fetched Successfully!',
-    data: result
+    data: result,
   });
 });
 
@@ -42,12 +42,12 @@ const updateAcademicDepartment = catchAsync(async (req, res) => {
   const result =
     await AcademicDepartmentServices.updateAcademicDepartmentFromDB(
       departmentId,
-      req.body
+      req.body,
     );
 
   sendResponse(res, {
     message: 'Acadmeic Department Updated Successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -55,5 +55,5 @@ export const AcademicDepartmentControllers = {
   createAcademicDepartment,
   getAllAcademicDepartment,
   getSingleAcademicDepartment,
-  updateAcademicDepartment
+  updateAcademicDepartment,
 };

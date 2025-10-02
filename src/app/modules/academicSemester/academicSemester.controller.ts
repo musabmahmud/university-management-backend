@@ -5,14 +5,14 @@ import httpStatus from 'http-status';
 
 const createAcademicSemester = catchAsync(async (req, res) => {
   const result = await AcademicSemesterServices.createAcademicSemesterFromDB(
-    req.body
+    req.body,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Academic Semester is Created Succssfully',
-    data: result
+    data: result,
   });
 });
 
@@ -22,7 +22,7 @@ const getAllAcademicSemester = catchAsync(async (_req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Academic Semester',
-    data: result
+    data: result,
   });
 });
 
@@ -31,15 +31,14 @@ const getSingleAcademicSemester = catchAsync(async (req, res) => {
   if (!semesterId && typeof semesterId !== 'string') {
     throw new Error('Please Provide valid type of ID');
   }
-  const result = await AcademicSemesterServices.getSingleAcademicSemesterFromDB(
-    semesterId
-  );
+  const result =
+    await AcademicSemesterServices.getSingleAcademicSemesterFromDB(semesterId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: `${result?.name} Fetched Successfully!`,
     success: true,
-    data: result
+    data: result,
   });
 });
 
@@ -51,22 +50,20 @@ const updateAcademicSemester = catchAsync(async (req, res) => {
 
   const result = await AcademicSemesterServices.updateAcademicSemesterFromDB(
     semesterId,
-    req.body
+    req.body,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: `${result?.name} Updated Successfully!`,
     success: true,
-    data: result
+    data: result,
   });
 });
-
-
 
 export const AcademicSemesterControllers = {
   createAcademicSemester,
   getAllAcademicSemester,
   getSingleAcademicSemester,
-  updateAcademicSemester
+  updateAcademicSemester,
 };

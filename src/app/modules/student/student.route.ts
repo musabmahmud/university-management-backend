@@ -12,7 +12,7 @@ router.delete('/:studentId', StudentControllers.deleteStudent);
 router.patch(
   '/update-student/:studentId',
   validateRequest(studentValidation.updateStudentValidationSchema),
-  StudentControllers.updateStudent
+  StudentControllers.updateStudent,
 );
 
 export const StudentRoutes = router;

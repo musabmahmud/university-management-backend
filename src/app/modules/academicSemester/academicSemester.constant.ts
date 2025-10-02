@@ -14,11 +14,11 @@ export const academicSemesterMonths = [
   'September',
   'October',
   'November',
-  'December'
+  'December',
 ];
 
 export const AcademicSemesterNameCodeWrapper = {
   Summer: '01',
   Fall: '02',
-  Winter: '03'
+  Winter: '03',
 };

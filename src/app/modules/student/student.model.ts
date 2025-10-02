@@ -2,74 +2,57 @@ import { model, Schema } from 'mongoose';
 import {
   TGuardian,
   TLocalGuardian,
-  TUserName,
   TStudent,
-  StudentModel
+  StudentModel,
 } from './student.interface';
-
-const userNameSchema = new Schema<TUserName>({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  middleName: {
-    type: String,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true
-  }
-});
+import { userNameSchema } from '../user/user.model';
 
 const guardianSchema = new Schema<TGuardian>({
   fatherName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   fatherOccupation: {
-    type: String
+    type: String,
   },
   fatherContactNo: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   motherName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   motherOccupation: {
-    type: String
+    type: String,
   },
   motherContactNo: {
     type: String,
     required: true,
-    trim: true
-  }
+    trim: true,
+  },
 });
 
 const localGuardianSchema = new Schema<TLocalGuardian>({
   name: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   occupation: {
-    type: String
+    type: String,
   },
   contactNo: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   address: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 const studentSchema = new Schema<TStudent, StudentModel>(
@@ -77,84 +60,84 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     id: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     user: {
       type: Schema.Types.ObjectId,
       required: true,
       unique: true,
-      ref: 'User'
+      ref: 'User',
     },
     academicSemester: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
-      required: true
+      required: true,
     },
     academicDepartment: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicDepartment',
-      required: true
+      required: true,
     },
     name: {
       type: userNameSchema,
-      required: true
+      required: true,
     },
     gender: {
       type: String,
       enum: {
-        values: ['male', 'female']
+        values: ['male', 'female'],
       },
-      required: true
+      required: true,
     },
     dateOfBirth: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     contactNo: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     emergencyContactNo: {
       type: String,
-      required: true
+      required: true,
     },
     bloodGroup: {
       type: String,
       enum: {
-        values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']
-      }
+        values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+      },
     },
     guardian: {
       type: guardianSchema,
-      required: true
+      required: true,
     },
     localGuardian: {
       type: localGuardianSchema,
-      required: true
+      required: true,
     },
     profileImg: {
-      type: String
+      type: String,
     },
     isActive: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isDeleted: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
 studentSchema.virtual('fullName').get(function () {

@@ -9,8 +9,8 @@ const getAllStudentFromDB = async () => {
     .populate({
       path: 'academicDepartment',
       populate: {
-        path: 'academicFaculty'
-      }
+        path: 'academicFaculty',
+      },
     });
   return result;
 };
@@ -24,7 +24,7 @@ const updateStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
   const { name, guardian, localGuardian, ...remainningStudentData } = payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
-    ...remainningStudentData
+    ...remainningStudentData,
   };
 
   if (name && Object.keys(name).length) {
@@ -49,7 +49,7 @@ const updateStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
 
   const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
   return result;
 };
@@ -63,7 +63,7 @@ const deleteStudentFromDB = async (id: string) => {
     const deleteStudent = await Student.findOneAndUpdate(
       { id },
       { isDeleted: true },
-      { new: true, session }
+      { new: true, session },
     );
 
     if (!deleteStudent) {
@@ -73,7 +73,7 @@ const deleteStudentFromDB = async (id: string) => {
     const deleteUser = await User.findOneAndUpdate(
       { id },
       { isDeleted: true },
-      { new: true, session }
+      { new: true, session },
     );
 
     if (!deleteUser) {
@@ -93,5 +93,5 @@ export const StudentServices = {
   getAllStudentFromDB,
   getSingleStudentFromDB,
   updateStudentFromDB,
-  deleteStudentFromDB
+  deleteStudentFromDB,
 };

@@ -3,40 +3,40 @@ import { TAcademicSemester } from './academicSemester.interface';
 import {
   academicSemesterCode,
   academicSemesterMonths,
-  academicSemesterName
+  academicSemesterName,
 } from './academicSemester.constant';
 
 const academicSemesterSchema = new Schema<TAcademicSemester>({
   name: {
     type: String,
     required: true,
-    enum: academicSemesterName
+    enum: academicSemesterName,
   },
   year: {
     type: String,
-    required: true
+    required: true,
   },
   code: {
     type: String,
     required: true,
-    enum: academicSemesterCode
+    enum: academicSemesterCode,
   },
   startMonths: {
     type: String,
     required: true,
-    enum: academicSemesterMonths
+    enum: academicSemesterMonths,
   },
   endMonths: {
     type: String,
     required: true,
-    enum: academicSemesterMonths
-  }
+    enum: academicSemesterMonths,
+  },
 });
 
 academicSemesterSchema.pre('save', async function (next) {
   const isSemesterExists = await AcademicSemester.findOne({
     year: this.year,
-    name: this.name
+    name: this.name,
   });
 
   if (isSemesterExists) {
@@ -47,5 +47,5 @@ academicSemesterSchema.pre('save', async function (next) {
 
 export const AcademicSemester = model<TAcademicSemester>(
   'AcademicSemester',
-  academicSemesterSchema
+  academicSemesterSchema,
 );
