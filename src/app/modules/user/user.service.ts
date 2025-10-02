@@ -58,13 +58,13 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
     }
 
     await session.commitTransaction();
+    await session.endSession();
     return newStudent;
   } catch (err: any) {
-    console.log(err)
+    // console.log(err)
     await session.abortTransaction();
-    throw new Error(err);
-  } finally {
     await session.endSession();
+    throw new Error(err);
   }
 };
 const createAdminIntoDB = async (password: string, payload: TAdmin) => {

@@ -51,11 +51,40 @@ const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
       },
     ];
   } else if (err instanceof Error) {
+    console.error(err); // Log the full error for debugging
     message = err.message;
+    let path = "";
+
+    const mongoErr = err as any;
+
+    if (mongoErr?.code === 11000 || mongoErr?.code === 11001) {
+      // Prioritize keyPattern if available
+      if (mongoErr.keyPattern) {
+        path = Object.keys(mongoErr.keyPattern)[0];
+      } else {
+        // Fallback: Extract field from errmsg or index name
+        const errmsg = mongoErr.errmsg || mongoErr.message;
+        const match = /dup key: \{ ([^}]*) \}/.exec(errmsg);
+
+        if (match && match[1]) {
+          try {
+            // Parse the matched substring into an object
+            const keyValue = JSON.parse(`{${match[1]}}`);
+            path = Object.keys(keyValue)[0];
+          } catch (parseError) {
+            // If parsing fails, try to extract from index name
+            if (mongoErr.index) {
+              path = mongoErr.index.replace(/_\d+$/, ''); // Remove trailing _1, _2, etc.
+            }
+          }
+        }
+      }
+    }
+
     errorSources = [
       {
-        path: '',
-        message: err?.message,
+        path: path,
+        message: err.message,
       },
     ];
   }

@@ -7,7 +7,7 @@ export const createFacultyValidationSchema = z.object({
     password: z
       .string()
       .max(20, { message: 'Password can not be more than 20 characters' }),
-    student: z.object({
+    faculty: z.object({
       designation: z.string(),
       name: UserValidation.createUserNameValidationSchema,
       gender: z.enum(Gender as [string, ...string[]]),
@@ -22,6 +22,30 @@ export const createFacultyValidationSchema = z.object({
       academicDepartment: z.string(),
       isActive: z.boolean().default(true),
       isDeleted: z.boolean().default(false),
+    }),
+  }),
+});
+
+export const updateFacultyValidationSchema = z.object({
+  body: z.object({
+    password: z
+      .string()
+      .max(20, { message: 'Password can not be more than 20 characters' }),
+    faculty: z.object({
+      designation: z.string().optional(),
+      name: UserValidation.createUserNameValidationSchema.optional(),
+      gender: z.enum(Gender as [string, ...string[]]).optional(),
+      dateOfBirth: z.string().optional(),
+      email: z.string().optional(),
+      contactNo: z.string().optional(),
+      emergencyContactNo: z.string().optional(),
+      bloodGroup: z.enum(BloodGroup as [string, ...string[]]).optional(),
+      presentAddress: z.string().optional(),
+      permanentAddress: z.string().optional(),
+      profileImg: z.string().optional(),
+      academicDepartment: z.string().optional(),
+      isActive: z.boolean().default(true).optional(),
+      isDeleted: z.boolean().default(false).optional(),
     }),
   }),
 });

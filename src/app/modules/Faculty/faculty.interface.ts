@@ -4,8 +4,8 @@ import { TBloodGroup, TGender, TUserName } from '../user/user.interface';
 export type TFaculty = {
   id: string;
   user: Types.ObjectId;
-  designation: string;
   academicDepartment: Types.ObjectId;
+  designation: string;
   name: TUserName;
   gender: TGender;
   dateOfBirth: Date;

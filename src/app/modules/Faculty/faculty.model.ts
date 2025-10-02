@@ -1,6 +1,7 @@
 import { model, Schema } from 'mongoose';
 import { BloodGroup, Gender } from '../user/user.constant';
 import { FacultyModel, TFaculty } from './faculty.interface';
+import { userNameSchema } from '../user/user.model';
 
 const facultySchema = new Schema<TFaculty>(
   {
@@ -8,6 +9,10 @@ const facultySchema = new Schema<TFaculty>(
       type: String,
       required: true,
       unique: true,
+    },
+    name: {
+      type: userNameSchema,
+      required: [true, "Faculty Member name is required"],
     },
     user: {
       type: Schema.Types.ObjectId,
@@ -71,17 +76,12 @@ const facultySchema = new Schema<TFaculty>(
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
     timestamps: true,
+    versionKey: false,
   },
 );
 
-facultySchema.virtual('fullNamne').get(function () {
-  return (
-    this?.name?.firstName +
-    ' ' +
-    this?.name?.middleName +
-    ' ' +
-    this?.name?.lastName
-  );
+facultySchema.virtual('fullName').get(function () {
+  return this?.name?.firstName + ' ' + this?.name?.middleName + ' ' + this?.name?.lastName;
 });
 
 facultySchema.pre('find', function (next) {
