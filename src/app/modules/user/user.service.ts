@@ -6,7 +6,11 @@ import { TUser } from './user.interface';
 import { User } from './user.model';
 import AppError from '../../error/AppError';
 import httpStatus from 'http-status';
-import { generateAdminId, generateFacultyId, generateStudentId } from './user.utils';
+import {
+  generateAdminId,
+  generateFacultyId,
+  generateStudentId,
+} from './user.utils';
 import { TAdmin } from '../admin/admin.interface';
 import { Admin } from '../admin/admin.model';
 import { TFaculty } from '../Faculty/faculty.interface';
@@ -105,10 +109,7 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   }
 };
 
-const createFacultyValidationSchema = async (
-  password: string,
-  payload: TFaculty,
-) => {
+const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   const userData: Partial<TUser> = {};
 
   userData.password = password || (config.default_password as string);
@@ -120,7 +121,7 @@ const createFacultyValidationSchema = async (
   );
 
   if (!academicDepartment) {
-    throw new AppError(400, "Academic Department not found");
+    throw new AppError(400, 'Academic Department not found');
   }
 
   const session = await mongoose.startSession();
@@ -130,34 +131,37 @@ const createFacultyValidationSchema = async (
 
     userData.id = await generateFacultyId();
 
-    const newUser = await User.create([userData], { session })
+    const newUser = await User.create([userData], { session });
 
     if (!newUser.length) {
-      throw new AppError(httpStatus.BAD_REQUEST, "Failed to create user");
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create user');
     }
 
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
 
-    const newFaculty = await Faculty.create([payload], { session })
+    const newFaculty = await Faculty.create([payload], { session });
 
-    if (!newFaculty.length) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create faculty')
+    const result = await Faculty.populate(newFaculty, {
+      path: 'academicDepartment',
+    });
+
+    if (!result) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create faculty');
     }
 
     await session.commitTransaction();
-    await session.endSession()
-    return newFaculty;
-  }
-  catch (err: any) {
+    await session.endSession();
+    return result;
+  } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
-    throw new Error(err)
+    throw new Error(err);
   }
 };
 
 export const UserServices = {
   createStudentIntoDB,
   createAdminIntoDB,
-  createFacultyValidationSchema
+  createFacultyIntoDB,
 };

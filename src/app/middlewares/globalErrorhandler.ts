@@ -53,7 +53,7 @@ const globalErrorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   } else if (err instanceof Error) {
     console.error(err); // Log the full error for debugging
     message = err.message;
-    let path = "";
+    let path = '';
 
     const mongoErr = err as any;
 

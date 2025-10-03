@@ -18,7 +18,7 @@ const adminSchema = new Schema<TAdmin>(
     },
     name: {
       type: userNameSchema,
-      required: [true, "Admin name is required"],
+      required: [true, 'Admin name is required'],
     },
     designation: {
       type: String,

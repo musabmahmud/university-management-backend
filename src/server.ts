@@ -4,7 +4,7 @@ import { Server } from 'http';
 import app from './app';
 import config from './app/config';
 
-let server: Server
+let server: Server;
 
 async function main() {
   try {
@@ -18,7 +18,6 @@ async function main() {
 }
 
 main();
-
 
 process.on('unhandledRejection', () => {
   console.log(`😈 unahandledRejection is detected , shutting down ...`);

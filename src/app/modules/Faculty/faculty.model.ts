@@ -12,7 +12,12 @@ const facultySchema = new Schema<TFaculty>(
     },
     name: {
       type: userNameSchema,
-      required: [true, "Faculty Member name is required"],
+      required: [true, 'Faculty Member name is required'],
+    },
+    academicDepartment: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'Academic Department is required'],
+      ref: 'AcademicDepartment',
     },
     user: {
       type: Schema.Types.ObjectId,
@@ -23,6 +28,11 @@ const facultySchema = new Schema<TFaculty>(
     designation: {
       type: String,
       required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
     gender: {
       type: String,
@@ -74,14 +84,19 @@ const facultySchema = new Schema<TFaculty>(
   },
   {
     toJSON: { virtuals: true },
-    toObject: { virtuals: true },
     timestamps: true,
     versionKey: false,
   },
 );
 
 facultySchema.virtual('fullName').get(function () {
-  return this?.name?.firstName + ' ' + this?.name?.middleName + ' ' + this?.name?.lastName;
+  return (
+    this?.name?.firstName +
+    ' ' +
+    this?.name?.middleName +
+    ' ' +
+    this?.name?.lastName
+  );
 });
 
 facultySchema.pre('find', function (next) {

@@ -25,12 +25,12 @@ export const createAdminValidationSchema = z.object({
   }),
 });
 
-
 export const updateAdminValidationSchema = z.object({
   body: z.object({
     password: z
       .string()
-      .max(20, { message: 'Password can not be more than 20 characters' }).optional(),
+      .max(20, { message: 'Password can not be more than 20 characters' })
+      .optional(),
     admin: z.object({
       designation: z.string().optional(),
       name: UserValidation.createUserNameValidationSchema.optional(),
