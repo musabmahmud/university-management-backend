@@ -31,17 +31,17 @@ const courseSchema = new Schema<TCourse>(
         },
         prefix: {
             type: String,
-            unique: true,
+            trim: true,
             required: true,
         },
         code: {
             type: Number,
-            unique: true,
+            trim: true,
             required: true,
         },
         credits: {
             type: Number,
-            unique: true,
+            trim: true,
             required: true,
         },
         preRequisiteCourses: [preRequisiteCoursesSchema],
